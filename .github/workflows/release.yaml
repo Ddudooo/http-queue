@@ -1,0 +1,40 @@
+name: Create and publish a Docker image
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build-and-push-image:
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up java
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+
+      - name: Gradle Build Image and Publish
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: |
+            bootBuildImage \
+            -Ddocker.publisgRegistry.username=${{ github.actor }} \
+            -Ddocker.publishRegistry.password=${{ secrets.GITHUB_TOKEN }} \
+            -Ddocker.publishRegistry.url=${{ env.REGISTRY }} \
+            -Dspring-boot.build-image.publish=true \
+            -Dspring-boot.build-image.imageName="${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest" \
+            -DskipTests
+
+
