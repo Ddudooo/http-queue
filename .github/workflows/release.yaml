@@ -25,10 +25,10 @@ jobs:
         with:
           java-version: '17'
           distribution: 'corretto'
-      - name: downcase repo
+
+      - name: downcase ACTOR
         run: |
-          echo "ACTOR=${{ github.actor,, }}" >> ${ GITHUB_ENV }
-          echo "REPO=${{ github.repository,, }}" >> ${ GITHUB_ENV }
+          echo "REPO=${${{github.actor}},,}" >>${GITHUB_ENV}
 
       - name: Gradle Build Image and Publish
         uses: gradle/gradle-build-action@v2
