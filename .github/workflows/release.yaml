@@ -7,7 +7,6 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  ACTOR: ddudooo
   IMAGE_NAME: ddudooo/http-queue
 
 jobs:
@@ -27,12 +26,16 @@ jobs:
           java-version: '17'
           distribution: 'corretto'
 
+      - name: downcase ACTOR
+        run: |
+          echo "ACTOR=${${{github.actor}},,}" >>${GITHUB_ENV}
+
       - name: Gradle Build Image and Publish
         uses: gradle/gradle-build-action@v2
         with:
           arguments: |
             bootBuildImage
-             -Ddocker.publisgRegistry.username=${{ ACTOR }}
+             -Ddocker.publisgRegistry.username=${{ env.ACTOR }}
              -Ddocker.publishRegistry.password=${{ secrets.GITHUB_TOKEN }}
              -Ddocker.publishRegistry.url=${{ env.REGISTRY }}
              --publishImage
