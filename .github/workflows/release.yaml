@@ -34,7 +34,7 @@ jobs:
              -Ddocker.publisgRegistry.username=${{ github.actor }}
              -Ddocker.publishRegistry.password=${{ secrets.GITHUB_TOKEN }}
              -Ddocker.publishRegistry.url=${{ env.REGISTRY }}
-             --publishImage=true
+             --publishImage
              --imageName="${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest"
              -DskipTests
 
