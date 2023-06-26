@@ -25,13 +25,17 @@ jobs:
         with:
           java-version: '17'
           distribution: 'corretto'
+      - name: downcase repo
+        run: |
+          echo "ACTOR=${{ github.actor,, }}" >> ${ GITHUB_ENV }
+          echo "REPO=${{ github.repository,, }}" >> ${ GITHUB_ENV }
 
       - name: Gradle Build Image and Publish
         uses: gradle/gradle-build-action@v2
         with:
           arguments: |
             bootBuildImage
-             -Ddocker.publisgRegistry.username=${{ github.actor }}
+             -Ddocker.publisgRegistry.username=${{ ACTOR }}
              -Ddocker.publishRegistry.password=${{ secrets.GITHUB_TOKEN }}
              -Ddocker.publishRegistry.url=${{ env.REGISTRY }}
              --publishImage
