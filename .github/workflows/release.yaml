@@ -35,7 +35,7 @@ jobs:
         with:
           arguments: |
             bootBuildImage
-             -Ddocker.publisgRegistry.username=${{ ACTOR }}
+             -Ddocker.publisgRegistry.username=${ ACTOR }
              -Ddocker.publishRegistry.password=${{ secrets.GITHUB_TOKEN }}
              -Ddocker.publishRegistry.url=${{ env.REGISTRY }}
              --publishImage
