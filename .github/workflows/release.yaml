@@ -31,11 +31,11 @@ jobs:
         with:
           arguments: |
             bootBuildImage
-             -Ddocker.publisgRegistry.username=${{ github.actor }}
-             -Ddocker.publishRegistry.password=${{ secrets.GITHUB_TOKEN }}
-             -Ddocker.publishRegistry.url=${{ env.REGISTRY }}
-             -Dspring-boot.build-image.publish=true
-             -Dspring-boot.build-image.imageName="${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest"
+             --username=${{ github.actor }}
+             --token=${{ secrets.GITHUB_TOKEN }}
+             --url=${{ env.REGISTRY }}
+             --publishImage=true
+             --imageName="${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest"
              -DskipTests
 
 
