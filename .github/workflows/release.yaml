@@ -28,7 +28,7 @@ jobs:
 
       - name: downcase ACTOR
         run: |
-          echo "REPO=${${{github.actor}},,}" >>${GITHUB_ENV}
+          echo "ACTOR=${${{github.actor}},,}" >>${GITHUB_ENV}
 
       - name: Gradle Build Image and Publish
         uses: gradle/gradle-build-action@v2
