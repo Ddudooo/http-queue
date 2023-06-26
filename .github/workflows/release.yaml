@@ -30,12 +30,12 @@ jobs:
         uses: gradle/gradle-build-action@v2
         with:
           arguments: |
-            bootBuildImage \
-            -Ddocker.publisgRegistry.username=${{ github.actor }} \
-            -Ddocker.publishRegistry.password=${{ secrets.GITHUB_TOKEN }} \
-            -Ddocker.publishRegistry.url=${{ env.REGISTRY }} \
-            -Dspring-boot.build-image.publish=true \
-            -Dspring-boot.build-image.imageName="${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest" \
-            -DskipTests
+            bootBuildImage
+             -Ddocker.publisgRegistry.username=${{ github.actor }}
+             -Ddocker.publishRegistry.password=${{ secrets.GITHUB_TOKEN }}
+             -Ddocker.publishRegistry.url=${{ env.REGISTRY }}
+             -Dspring-boot.build-image.publish=true
+             -Dspring-boot.build-image.imageName="${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest" \
+             -DskipTests
 
 
