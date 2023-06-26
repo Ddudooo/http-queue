@@ -31,9 +31,9 @@ jobs:
         with:
           arguments: |
             bootBuildImage
-             --username=${{ github.actor }}
-             --token=${{ secrets.GITHUB_TOKEN }}
-             --url=${{ env.REGISTRY }}
+             -Ddocker.publisgRegistry.username=${{ github.actor }}
+             -Ddocker.publishRegistry.password=${{ secrets.GITHUB_TOKEN }}
+             -Ddocker.publishRegistry.url=${{ env.REGISTRY }}
              --publishImage=true
              --imageName="${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest"
              -DskipTests
