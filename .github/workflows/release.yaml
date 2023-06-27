@@ -51,5 +51,5 @@ jobs:
              -DskipTests
 
       - name: Push to GitHub Packages
-        run: docker push ${{ env.REGISTRY }}/${{ github.repository }}:latest
+        run: docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
         
