@@ -7,6 +7,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
+  GIT_ACTOR: ${{ github.actor }}
   IMAGE_NAME: ddudooo/http-queue
 
 jobs:
@@ -28,10 +29,10 @@ jobs:
 
       - name: downcase ACTOR
         run: |
-          echo ACTOR=${${{github.actor}},,}
+          echo ACTOR=${GIT_ACTOR,,}
       - name: downcase ACTOR
         run: |
-          echo "ACTOR=${${{github.actor}},,}" >>${GITHUB_ENV}
+          echo "ACTOR=${GIT_ACTOR,,}" >>${GITHUB_ENV}
           
       - name: Log in to the Container registry
         uses: docker/login-action@v2
