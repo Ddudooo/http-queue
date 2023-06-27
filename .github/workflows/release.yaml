@@ -42,16 +42,23 @@ jobs:
           username: ${{ env.ACTOR }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Gradle Build Image and Publish
+      - name: Gradle Build Image
         uses: gradle/gradle-build-action@v2
         with:
           arguments: |
             bootBuildImage
              -Ddocker.publisgRegistry.username=${{ env.ACTOR }}
              -Ddocker.publishRegistry.password=${{ secrets.GITHUB_TOKEN }}
-             -Ddocker.publishRegistry.url=${{ env.REGISTRY }}
-             --publishImage
+             -Ddocker.publishRegistry.url=${{ env.REGISTRY }}           
              --imageName=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
              -DskipTests
+             
+      - name: Docker image push
+        uses: docker/build-push-action@v4
+        with:
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+             
+     
 
 
