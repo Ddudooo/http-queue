@@ -34,6 +34,10 @@ jobs:
       - name: downcase IMAGE_NAME
         run: |
           echo "IMAGE_NAME=${GIT_REPOSITORY,,}" >>${GITHUB_ENV}
+        
+      - name: Login to GitHub Packages
+        run: |
+          docker login -u ${{ github.actor }} -p ${{ secrets.GIT_PACKAGE }} ghcr.io
 
       - name: Gradle Build Image
         uses: gradle/gradle-build-action@v2
@@ -42,8 +46,10 @@ jobs:
             bootBuildImage
              -Ddocker.publisgRegistry.username=${{ env.ACTOR }}
              -Ddocker.publishRegistry.password=${{ secrets.GIT_PACKAGE }}
-             -Ddocker.publishRegistry.token=${{ secrets.GIT_PACKAGE }}
              -Ddocker.publishRegistry.url=${{ env.REGISTRY }}    
-             --publishImage
              --imageName=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
              -DskipTests
+
+      - name: Push to GitHub Packages
+        run: docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+        
