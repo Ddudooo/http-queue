@@ -42,6 +42,7 @@ jobs:
             bootBuildImage
              -Ddocker.publisgRegistry.username=${{ env.ACTOR }}
              -Ddocker.publishRegistry.password=${{ secrets.GIT_PACKAGE }}
+             -Ddocker.publishRegistry.token=${{ secrets.GIT_PACKAGE }}
              -Ddocker.publishRegistry.url=${{ env.REGISTRY }}    
              --publishImage
              --imageName=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
