@@ -28,6 +28,9 @@ jobs:
 
       - name: downcase ACTOR
         run: |
+          echo "ACTOR=${${{github.actor}},,}"
+      - name: downcase ACTOR
+        run: |
           echo "ACTOR=${${{github.actor}},,}" >>${GITHUB_ENV}
           
       - name: Log in to the Container registry
