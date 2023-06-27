@@ -8,7 +8,7 @@ on:
 env:
   REGISTRY: ghcr.io
   GIT_ACTOR: ${{ github.actor }}
-  IMAGE_NAME: ddudooo/http-queue
+  GIT_REPOSITORY: ${{ github.repository }}
 
 jobs:
   build-and-push-image:
@@ -29,10 +29,11 @@ jobs:
 
       - name: downcase ACTOR
         run: |
-          echo ACTOR=${GIT_ACTOR,,}
-      - name: downcase ACTOR
-        run: |
           echo "ACTOR=${GIT_ACTOR,,}" >>${GITHUB_ENV}
+          
+      - name: downcase IMAGE_NAME
+        run: |
+          echo "IMAGE_NAME=${GIT_REPOSITORY,,}" >>${GITHUB_ENV}
           
       - name: Log in to the Container registry
         uses: docker/login-action@v2
@@ -47,7 +48,7 @@ jobs:
           arguments: |
             bootBuildImage
              -Ddocker.publisgRegistry.username=${{ env.ACTOR }}
-             -Ddocker.publishRegistry.token=${{ secrets.GITHUB_TOKEN }}
+             -Ddocker.publishRegistry.password=${{ secrets.GITHUB_TOKEN }}
              -Ddocker.publishRegistry.url=${{ env.REGISTRY }}
              --publishImage
              --imageName=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
