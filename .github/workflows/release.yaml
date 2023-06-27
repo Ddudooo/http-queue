@@ -34,13 +34,6 @@ jobs:
       - name: downcase IMAGE_NAME
         run: |
           echo "IMAGE_NAME=${GIT_REPOSITORY,,}" >>${GITHUB_ENV}
-          
-      - name: Log in to the Container registry
-        uses: docker/login-action@v2
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ env.ACTOR }}
-          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Gradle Build Image
         uses: gradle/gradle-build-action@v2
@@ -48,17 +41,8 @@ jobs:
           arguments: |
             bootBuildImage
              -Ddocker.publisgRegistry.username=${{ env.ACTOR }}
-             -Ddocker.publishRegistry.password=${{ secrets.GITHUB_TOKEN }}
-             -Ddocker.publishRegistry.url=${{ env.REGISTRY }}           
+             -Ddocker.publishRegistry.password=${{ secrets.GIT_PACKAGE }}
+             -Ddocker.publishRegistry.url=${{ env.REGISTRY }}    
+             --publishImage
              --imageName=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
              -DskipTests
-             
-      - name: Docker image push
-        uses: docker/build-push-action@v4
-        with:
-          push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
-             
-     
-
-
