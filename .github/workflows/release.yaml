@@ -28,7 +28,7 @@ jobs:
 
       - name: downcase ACTOR
         run: |
-          echo "ACTOR=${${{github.actor}},,}"
+          echo ACTOR=${${{github.actor}},,}
       - name: downcase ACTOR
         run: |
           echo "ACTOR=${${{github.actor}},,}" >>${GITHUB_ENV}
