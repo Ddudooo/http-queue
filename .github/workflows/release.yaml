@@ -47,9 +47,9 @@ jobs:
              -Ddocker.publisgRegistry.username=${{ env.ACTOR }}
              -Ddocker.publishRegistry.password=${{ secrets.GIT_PACKAGE }}
              -Ddocker.publishRegistry.url=${{ env.REGISTRY }}    
-             --imageName=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+             --imageName=${{ env.REGISTRY }}/${{ github.repository }}:latest
              -DskipTests
 
       - name: Push to GitHub Packages
-        run: docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+        run: docker push ${{ env.REGISTRY }}/${{ github.repository }}:latest
         
